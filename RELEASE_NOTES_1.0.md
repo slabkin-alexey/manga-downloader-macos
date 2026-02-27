@@ -14,10 +14,21 @@ Initial public release of the Manga Downloader macOS app documentation and relea
 - Turbo mode performance profile with warning and persisted state.
 - EN/UK/RU documentation site published via GitHub Pages.
 
+## Release Assets
+
+- `Manga Downloader.zip` - packaged macOS app build.
+- `SHA256SUMS.txt` - SHA-256 checksum file for integrity verification.
+
+Integrity check command:
+
+```bash
+shasum -a 256 -c SHA256SUMS.txt
+```
+
 ## Documentation
 
 GitHub Pages documentation is available at:
-- https://<owner>.github.io/manga-downloader-macos/
+- https://slabkin-alexey.github.io/manga-downloader-macos/
 
 Language pages:
 - English: `/en/`
