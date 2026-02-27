@@ -85,6 +85,11 @@ shasum -a 256 -c SHA256SUMS.txt
 - Conversion quality/performance: install `magick` (ImageMagick) for preferred conversion path.
 - High CPU/temperature: disable Turbo mode.
 
+## Questions and Suggestions
+
+If you have questions or suggestions, send your request to:
+- borunov.alexey.work@gmail.com
+
 ## Privacy and Legal
 
 - The app processes URLs/content provided by the user.
