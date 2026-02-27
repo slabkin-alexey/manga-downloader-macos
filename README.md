@@ -1,6 +1,7 @@
 # Manga Downloader (macOS)
 
 Manga Downloader is a friendly macOS app that helps you download manga from supported websites and convert it into EPUB files optimized for e-ink reading.
+Common search phrases: `manga downloader macOS`, `EPUB manga converter`, `manga.in.ua downloader`, `com-x.life downloader`.
 
 Supported services:
 - `manga/in/ua` (`manga.in.ua`)

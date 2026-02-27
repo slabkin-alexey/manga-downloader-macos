@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://slabkin-alexey.github.io/manga-downloader-macos/sitemap.xml
