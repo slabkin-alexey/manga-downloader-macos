@@ -16,7 +16,7 @@ Initial public release of the Manga Downloader macOS app documentation and relea
 
 ## Release Assets
 
-- `Manga Downloader.zip` - packaged macOS app build.
+- `Manga-Downloader-macOS-1.0.zip` - packaged macOS app build.
 - `SHA256SUMS.txt` - SHA-256 checksum file for integrity verification.
 
 Integrity check command:
