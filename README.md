@@ -76,7 +76,3 @@ shasum -a 256 -c SHA256SUMS.txt
 - The app processes URLs/content provided by the user.
 - `com-x.life` auth cookies are stored for authenticated retry flow and can be reset by user action.
 - Users are responsible for compliance with website terms and applicable copyright laws.
-
-## Source of Truth
-
-- `docs/FULL_APP_FUNCTIONALITY_SPEC.txt`
