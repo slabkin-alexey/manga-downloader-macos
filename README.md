@@ -19,6 +19,20 @@ GitHub Pages:
 - Ukrainian: https://slabkin-alexey.github.io/manga-downloader-macos/uk/
 - Russian: https://slabkin-alexey.github.io/manga-downloader-macos/ru/
 
+## Screenshots
+
+1. Downloader screen (ready state)
+
+![Screenshot 1](docs/assets/images/screenshot-1.png)
+
+2. Service selection screen
+
+![Screenshot 2](docs/assets/images/screenshot-2.png)
+
+3. Active download with progress and logs
+
+![Screenshot 3](docs/assets/images/screenshot-3.png)
+
 ## Features
 
 - Service picker with two sources (`manga/in/ua`, `com-x.life`)
