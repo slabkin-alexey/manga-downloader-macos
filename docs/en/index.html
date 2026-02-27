@@ -23,8 +23,8 @@
 
   <section class="card">
     <h2>What It Is</h2>
-    <p>Manga Downloader is a desktop app that downloads manga from supported websites and converts content into EPUB optimized for e-ink reading. Source websites: manga/in/ua (<code>manga.in.ua</code>) and com-x.life (<code>com-x.life</code>).</p>
-    <p>The app interface supports three languages: Ukrainian, English, and Russian.</p>
+    <p>Manga Downloader is a macOS app that helps you download manga from supported websites and convert it into EPUB files optimized for e-ink reading.</p>
+    <p>Supported sources are manga/in/ua (<code>manga.in.ua</code>) and com-x.life (<code>com-x.life</code>), and the interface is available in Ukrainian, English, and Russian.</p>
   </section>
 
   <section class="card">
@@ -48,17 +48,16 @@
   <section class="card">
     <h2>Features</h2>
     <ul>
-      <li>Service picker with two sources: manga/in/ua and com-x.life.</li>
-      <li>Input as a single URL or a queue of URLs (comma/newline separated).</li>
-      <li>manga/in/ua mode auto-switch: URL input for download, text input for search.</li>
-      <li>Chapter/volume filtering with range syntax: <code>1-2</code>, <code>1-2,4,10-12</code>.</li>
-      <li>Optional custom EPUB cover image.</li>
-      <li>Per-volume output: one EPUB per volume.</li>
-      <li>Real-time localized logs with clickable links and multi-level progress bars.</li>
-      <li>Start/Stop control with cancellation and process cleanup.</li>
-      <li>Turbo mode (performance profile switch) with warning and persisted state.</li>
-      <li>Completion alert + macOS system notification.</li>
-      <li>Localization: English, Ukrainian, Russian.</li>
+      <li>Pick one of two sources: manga/in/ua or com-x.life.</li>
+      <li>Paste one link or a queue of links (comma-separated or one per line).</li>
+      <li>In manga/in/ua mode, the app auto-switches: URL for download, plain text for search.</li>
+      <li>Filter chapters/volumes with range syntax: <code>1-2</code>, <code>1-2,4,10-12</code>.</li>
+      <li>Add an optional custom EPUB cover image.</li>
+      <li>Get one EPUB per volume.</li>
+      <li>Follow progress with real-time localized logs, clickable links, and progress bars.</li>
+      <li>Start/Stop anytime with proper cancellation and process cleanup.</li>
+      <li>Use Turbo mode for higher performance (with warning and saved state).</li>
+      <li>See completion in both app alert and macOS system notification.</li>
     </ul>
   </section>
 
@@ -66,27 +65,27 @@
     <h2>Supported Services</h2>
     <h3>manga/in/ua</h3>
     <ul>
-      <li>Search flow: query website, parse cards, print readable results in logs.</li>
-      <li>Download flow: resolve links, fetch chapter list, apply filters, download images, build CBZ and EPUB.</li>
-      <li>EPUB page ordering follows manga-style reading semantics used by the app.</li>
+      <li>Search by text query, parse result cards, and show readable results in logs.</li>
+      <li>Download by URL: resolve links, fetch chapters, apply filters, download images, then build CBZ and EPUB.</li>
+      <li>EPUB page order follows the app's manga-style reading logic.</li>
     </ul>
     <h3>com-x.life</h3>
     <ul>
-      <li>URL download flow with metadata/chapter parsing from site payloads.</li>
-      <li>Archive download and extraction, then conversion and packaging.</li>
-      <li>Auth flow with cookie persistence, in-app login WebView, retry logic, and reset-login action.</li>
-      <li>Parsing robustness for payload variants and chapter ID field variants.</li>
+      <li>Download by direct URL with metadata and chapter parsing from site payloads.</li>
+      <li>Download chapter archives, extract images, then run conversion and packaging.</li>
+      <li>If login is required, use in-app WebView auth with cookie persistence and retry flow.</li>
+      <li>Includes robust parsing for payload and chapter ID field variants.</li>
     </ul>
   </section>
 
   <section class="card">
     <h2>How It Works (Step-by-Step)</h2>
     <ol>
-      <li>Select source service on startup screen.</li>
-      <li>Provide URL(s) or search text (manga/in/ua only).</li>
-      <li>Optionally set chapter/volume filters and output directory.</li>
+      <li>Open the app and select a source service.</li>
+      <li>Enter URL(s), or enter search text for manga/in/ua.</li>
+      <li>Optionally set chapter/volume filters and choose output location.</li>
       <li>Optionally select a custom cover image.</li>
-      <li>Start processing. For each chapter/page set, pipeline is executed:</li>
+      <li>Start processing. For each chapter/page set, the app runs this pipeline:</li>
     </ol>
     <ul>
       <li>Download original image/archive.</li>
@@ -102,11 +101,11 @@
   <section class="card">
     <h2>Authentication Flow (com-x.life)</h2>
     <ol>
-      <li>Downloader detects that authorization is required.</li>
-      <li>If valid cookies exist, flow retries without login UI.</li>
-      <li>If not, app opens in-app login WebView and captures cookies.</li>
-      <li>Cookies are persisted and download flow is retried.</li>
-      <li>User can reset saved login cookies from feature UI.</li>
+      <li>The downloader checks whether authorization is required.</li>
+      <li>If valid cookies already exist, it retries silently without opening login UI.</li>
+      <li>If not, the app opens an in-app login WebView and captures cookies.</li>
+      <li>Cookies are saved, then the download flow is retried.</li>
+      <li>You can reset saved login cookies from the feature screen.</li>
     </ol>
   </section>
 
@@ -152,27 +151,27 @@
   <section class="card">
     <h2>Usage Guide</h2>
     <ol>
-      <li>Launch app and choose manga/in/ua or com-x.life.</li>
-      <li>Paste one or many links. For manga/in/ua search, enter plain text instead of URL.</li>
+      <li>Launch the app and choose manga/in/ua or com-x.life.</li>
+      <li>Paste one link or multiple links. For manga/in/ua search, enter plain text instead of URL.</li>
       <li>Set chapter/volume filters if needed.</li>
       <li>Select output directory and optional EPUB cover image.</li>
-      <li>Optionally enable Turbo mode (warning appears).</li>
-      <li>Press Start and monitor logs/progress.</li>
-      <li>When done, review completion alert/notification and generated EPUB files by volume.</li>
+      <li>Optionally enable Turbo mode (a warning will be shown).</li>
+      <li>Click Start and monitor logs and progress bars.</li>
+      <li>When finished, check the completion alert/notification and your per-volume EPUB files.</li>
     </ol>
   </section>
 
   <section class="card">
     <h2>FAQ / Troubleshooting</h2>
-    <h3>Input is rejected</h3>
+    <h3>My input is rejected</h3>
     <p>Empty input is blocked. In com-x.life mode all queue entries must be valid URLs.</p>
-    <h3>Filter does not apply</h3>
+    <h3>Filters do not apply</h3>
     <p>Check syntax and remove invalid tokens. Use only numbers and ranges separated by commas.</p>
-    <h3>com-x.life asks for authorization</h3>
+    <h3>com-x.life asks me to authorize</h3>
     <p>Complete login in WebView. If old cookies are stale, use reset-login and retry.</p>
-    <h3>Image conversion quality/speed issues</h3>
+    <h3>Image conversion is slow or low quality</h3>
     <p>Install ImageMagick (<code>magick</code>) for preferred conversion path. Otherwise app falls back to native tools.</p>
-    <h3>High CPU/temperature</h3>
+    <h3>CPU load or temperature is high</h3>
     <p>Disable Turbo mode for lower system pressure. Turbo mode intentionally increases parallelism and responsiveness.</p>
   </section>
 
@@ -200,7 +199,7 @@
 
   <section class="card">
     <h2>Questions and Suggestions</h2>
-    <p>If you have questions or suggestions, send your request to <a href="mailto:borunov.alexey.work@gmail.com">borunov.alexey.work@gmail.com</a>.</p>
+    <p>If you have any questions or suggestions, we are happy to hear from you at <a href="mailto:borunov.alexey.work@gmail.com">borunov.alexey.work@gmail.com</a>.</p>
   </section>
 
 </main>

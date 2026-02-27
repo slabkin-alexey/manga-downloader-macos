@@ -1,12 +1,12 @@
 # Manga Downloader (macOS)
 
-Manga Downloader is a macOS desktop app that downloads manga from supported websites and converts content into EPUB optimized for e-ink reading.
+Manga Downloader is a friendly macOS app that helps you download manga from supported websites and convert it into EPUB files optimized for e-ink reading.
 
 Supported services:
 - `manga/in/ua` (`manga.in.ua`)
 - `com-x.life` (`com-x.life`)
 
-App interface languages:
+Interface languages:
 - Ukrainian
 - English
 - Russian
@@ -33,28 +33,28 @@ GitHub Pages:
 
 ![Screenshot 3](docs/assets/images/screenshot-3.png)
 
-## Features
+## What You Can Do
 
-- Service picker with two sources (`manga/in/ua`, `com-x.life`)
-- URL input (single URL or URL queue)
-- `manga/in/ua` search mode and URL download mode
-- Chapter/volume filtering with range syntax (`1-2,4,10-12`)
-- Optional custom EPUB cover image
-- Conversion pipeline: download -> grayscale -> e-ink resize -> HEIC -> CBZ -> EPUB
-- One EPUB output per volume
-- `com-x.life` auth flow with in-app WebView login, cookie persistence, retry, reset login
-- Real-time localized logs, clickable links, multi-level progress bars
-- Start/Stop process control and cancellation
-- Turbo mode with persisted performance profile and warning
-- Completion alert + macOS system notification
+- Choose one of two sources (`manga/in/ua`, `com-x.life`)
+- Paste one URL or a queue of URLs
+- Use `manga/in/ua` search mode or URL download mode
+- Filter chapters/volumes with range syntax (`1-2,4,10-12`)
+- Add an optional custom EPUB cover image
+- Run full pipeline: download -> grayscale -> e-ink resize -> HEIC -> CBZ -> EPUB
+- Get one EPUB output per volume
+- Use `com-x.life` auth flow (in-app WebView login, cookie persistence, retry, reset login)
+- Track work with localized logs, clickable links, and multi-level progress bars
+- Start/Stop with cancellation and cleanup
+- Enable Turbo mode for higher performance (with warning and saved state)
+- Receive completion alert + macOS notification
 
-## How It Works
+## Quick Start
 
-1. Choose source service.
-2. Enter URL(s) or search text (`manga/in/ua` only).
+1. Open the app and choose a source service.
+2. Enter URL(s), or enter search text (`manga/in/ua` only).
 3. Optionally set chapter/volume filters and cover image.
-4. Start processing.
-5. For each chapter/page set, app runs:
+4. Click Start.
+5. For each chapter/page set, the app runs:
    - download original image/archive
    - grayscale conversion (B/W)
    - e-ink resize (max 1080px height, no upscaling)
@@ -77,17 +77,17 @@ Verify integrity:
 shasum -a 256 -c SHA256SUMS.txt
 ```
 
-## Troubleshooting
+## FAQ / Troubleshooting
 
-- Invalid/empty input: check URL list format and required fields.
+- Input is rejected: check URL list format and required fields.
 - Filter errors: use only numbers and ranges separated by commas.
-- `com-x.life` authorization needed: complete login in WebView or reset saved cookies.
-- Conversion quality/performance: install `magick` (ImageMagick) for preferred conversion path.
-- High CPU/temperature: disable Turbo mode.
+- `com-x.life` asks for authorization: complete login in WebView or reset saved cookies.
+- Conversion is slow/low quality: install `magick` (ImageMagick) for preferred conversion path.
+- CPU load/temperature is high: disable Turbo mode.
 
 ## Questions and Suggestions
 
-If you have questions or suggestions, send your request to:
+If you have questions or suggestions, we are happy to hear from you:
 - borunov.alexey.work@gmail.com
 
 ## Privacy and Legal
