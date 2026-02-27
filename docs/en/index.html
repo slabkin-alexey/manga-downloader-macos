@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Manga Downloader Documentation (EN)</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+<header>
+  <nav class="nav">
+    <div class="brand">Manga Downloader Docs</div>
+    <div class="lang-switcher" aria-label="Language switcher">
+      <a href="../en/" data-lang="en">EN</a>
+      <a href="../uk/" data-lang="uk">UK</a>
+      <a href="../ru/" data-lang="ru">RU</a>
+    </div>
+  </nav>
+</header>
+<main class="container">
+  <h1>Manga Downloader (macOS) - Documentation</h1>
+  <p class="small">Version: 1.0 | Platform: native SwiftUI app for macOS</p>
+
+  <section class="card">
+    <h2>What It Is</h2>
+    <p>Manga Downloader is a desktop app that downloads manga from supported websites and converts content into EPUB optimized for e-ink reading. Source websites: manga/in/ua (<code>manga.in.ua</code>) and com-x.life (<code>com-x.life</code>).</p>
+  </section>
+
+  <section class="card">
+    <h2>Features</h2>
+    <ul>
+      <li>Service picker with two sources: manga/in/ua and com-x.life.</li>
+      <li>Input as a single URL or a queue of URLs (comma/newline separated).</li>
+      <li>manga/in/ua mode auto-switch: URL input for download, text input for search.</li>
+      <li>Chapter/volume filtering with range syntax: <code>1-2</code>, <code>1-2,4,10-12</code>.</li>
+      <li>Optional custom EPUB cover image.</li>
+      <li>Per-volume output: one EPUB per volume.</li>
+      <li>Real-time localized logs with clickable links and multi-level progress bars.</li>
+      <li>Start/Stop control with cancellation and process cleanup.</li>
+      <li>Turbo mode (performance profile switch) with warning and persisted state.</li>
+      <li>Completion alert + macOS system notification.</li>
+      <li>Localization: English, Ukrainian, Russian.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Supported Services</h2>
+    <h3>manga/in/ua</h3>
+    <ul>
+      <li>Search flow: query website, parse cards, print readable results in logs.</li>
+      <li>Download flow: resolve links, fetch chapter list, apply filters, download images, build CBZ and EPUB.</li>
+      <li>EPUB page ordering follows manga-style reading semantics used by the app.</li>
+    </ul>
+    <h3>com-x.life</h3>
+    <ul>
+      <li>URL download flow with metadata/chapter parsing from site payloads.</li>
+      <li>Archive download and extraction, then conversion and packaging.</li>
+      <li>Auth flow with cookie persistence, in-app login WebView, retry logic, and reset-login action.</li>
+      <li>Parsing robustness for payload variants and chapter ID field variants.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>How It Works (Step-by-Step)</h2>
+    <ol>
+      <li>Select source service on startup screen.</li>
+      <li>Provide URL(s) or search text (manga/in/ua only).</li>
+      <li>Optionally set chapter/volume filters and output directory.</li>
+      <li>Optionally select a custom cover image.</li>
+      <li>Start processing. For each chapter/page set, pipeline is executed:</li>
+    </ol>
+    <ul>
+      <li>Download original image/archive.</li>
+      <li>Convert to grayscale (B/W).</li>
+      <li>Optimize for e-ink (max height 1080px, keep aspect ratio, no upscaling).</li>
+      <li>Convert to HEIC.</li>
+      <li>Remove metadata/EXIF where possible.</li>
+      <li>Stage by volume and package artifacts.</li>
+      <li>Create CBZ then EPUB per volume, then clean temporary intermediates on success.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Architecture Overview (MVVM)</h2>
+    <ul>
+      <li><strong>Views + ViewModels + Services + Models</strong> (MVVM).</li>
+      <li>Main ViewModels: <code>RunnerViewModel</code> (manga/in/ua), <code>ComXLifeViewModel</code>.</li>
+      <li>manga/in/ua services: <code>MangaEngine</code>, <code>MangaInUAClient</code>, <code>Downloader</code>, <code>EpubConverter</code>.</li>
+      <li>com-x.life services: <code>ComXDownloaderService</code>, <code>ComXEpubConverter</code>, cookie/auth utilities.</li>
+      <li>Shared services: <code>ImageProcessingService</code>, <code>ProcessRegistry</code>, <code>ShellProcessService</code>, <code>AppPerformanceProfile</code>, <code>FanControlService</code>, <code>AppNotificationService</code>.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Authentication Flow (com-x.life)</h2>
+    <ol>
+      <li>Downloader detects that authorization is required.</li>
+      <li>If valid cookies exist, flow retries without login UI.</li>
+      <li>If not, app opens in-app login WebView and captures cookies.</li>
+      <li>Cookies are persisted and download flow is retried.</li>
+      <li>User can reset saved login cookies from feature UI.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Filtering Rules</h2>
+    <ul>
+      <li>Accepted syntax: mixed values and ranges (example: <code>1-2,4,10-12</code>).</li>
+      <li>If both filters are provided, chapter filter is applied within matching volumes.</li>
+      <li>Invalid syntax returns explicit validation error.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Progress, Logging, and Process Control</h2>
+    <ul>
+      <li>Log panel shows event-oriented text and clickable links.</li>
+      <li>Progress stages include downloading, B/W conversion, resolution optimization, HEIC optimization, and volume EPUB conversion.</li>
+      <li>Multi-level progress tracks pages in chapter, chapters in volume, and overall volume process.</li>
+      <li>Stop action cancels task, terminates registered shell processes, logs cancellation, and restores fan mode to auto if used.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Turbo Mode and Performance</h2>
+    <ul>
+      <li><strong>Turbo OFF:</strong> background priorities, lower parallelism/network aggressiveness, <code>nice</code>-wrapped shell commands.</li>
+      <li><strong>Turbo ON:</strong> high priorities, higher parallelism based on CPU cores, higher network responsiveness.</li>
+      <li>Enabling turbo shows warning alert; state is persisted globally.</li>
+      <li>Optional fan helper integration: max fan mode during active turbo processing, auto mode restored on stop/completion.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Dependencies and Tooling</h2>
+    <ul>
+      <li>Image conversion prefers ImageMagick <code>magick</code> when available.</li>
+      <li>Fallback tooling uses native macOS commands like <code>sips</code>.</li>
+      <li>App can check for missing <code>magick</code>, run Homebrew install command in Terminal, and poll for completion.</li>
+      <li>TelegramReporter integration sends startup telemetry/log event using configured token/chat/app tag.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Installation / Build</h2>
+    <ol>
+      <li>Clone repository.</li>
+      <li>Open project in Xcode (macOS target).</li>
+      <li>Ensure optional tools are installed if needed for image quality: <code>magick</code> (ImageMagick).</li>
+      <li>Build and run the SwiftUI app.</li>
+    </ol>
+    <p class="small">Note: This documentation is based on functionality spec v1.0 and describes behavior exposed by the current app architecture.</p>
+  </section>
+
+  <section class="card">
+    <h2>Usage Guide</h2>
+    <ol>
+      <li>Launch app and choose manga/in/ua or com-x.life.</li>
+      <li>Paste one or many links. For manga/in/ua search, enter plain text instead of URL.</li>
+      <li>Set chapter/volume filters if needed.</li>
+      <li>Select output directory and optional EPUB cover image.</li>
+      <li>Optionally enable Turbo mode (warning appears).</li>
+      <li>Press Start and monitor logs/progress.</li>
+      <li>When done, review completion alert/notification and generated EPUB files by volume.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>FAQ / Troubleshooting</h2>
+    <h3>Input is rejected</h3>
+    <p>Empty input is blocked. In com-x.life mode all queue entries must be valid URLs.</p>
+    <h3>Filter does not apply</h3>
+    <p>Check syntax and remove invalid tokens. Use only numbers and ranges separated by commas.</p>
+    <h3>com-x.life asks for authorization</h3>
+    <p>Complete login in WebView. If old cookies are stale, use reset-login and retry.</p>
+    <h3>Image conversion quality/speed issues</h3>
+    <p>Install ImageMagick (<code>magick</code>) for preferred conversion path. Otherwise app falls back to native tools.</p>
+    <h3>High CPU/temperature</h3>
+    <p>Disable Turbo mode for lower system pressure. Turbo mode intentionally increases parallelism and responsiveness.</p>
+  </section>
+
+  <section class="card">
+    <h2>Privacy and Legal Disclaimer</h2>
+    <ul>
+      <li>The app processes URLs and downloadable content provided by the user.</li>
+      <li>com-x.life auth cookies are stored to support authenticated retry flow and can be reset by user action.</li>
+      <li>TelegramReporter startup telemetry/logging requires configured credentials.</li>
+      <li>Users are responsible for complying with website terms of service and applicable copyright laws.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Changelog / Release Notes (1.0)</h2>
+    <ul>
+      <li>Initial documented release of Manga Downloader for macOS.</li>
+      <li>Two services supported: manga/in/ua and com-x.life.</li>
+      <li>Complete download-to-EPUB pipeline with grayscale, e-ink optimization, HEIC conversion, and per-volume EPUB output.</li>
+      <li>com-x.life login WebView with cookie persistence and reset action.</li>
+      <li>Real-time localized logs, progress bars, completion alerts/notifications, Start/Stop controls, and Turbo mode.</li>
+      <li>Multilingual GitHub Pages documentation (EN/UK/RU).</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Source of truth: <a href="../FULL_APP_FUNCTIONALITY_SPEC.txt">FULL_APP_FUNCTIONALITY_SPEC.txt</a></p>
+  </footer>
+</main>
+<script src="../assets/lang.js"></script>
+</body>
+</html>

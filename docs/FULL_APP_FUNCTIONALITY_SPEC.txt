@@ -1,0 +1,363 @@
+MANGA DOWNLOADER - FULL FUNCTIONALITY SPECIFICATION
+Version: 1.0
+Platform: macOS (native SwiftUI app)
+Primary purpose: download manga from supported websites and convert to EPUB optimized for e-ink reading.
+
+============================================================
+1) HIGH-LEVEL OVERVIEW
+============================================================
+
+The app is a desktop downloader/converter with two source services:
+- manga/in/ua (manga.in.ua)
+- com-x.life (com-x.life)
+
+Main capabilities:
+- Service selection screen (choose source website)
+- URL input (single URL or queue of URLs)
+- Optional chapter/volume filtering (range syntax supported)
+- Optional custom EPUB cover image
+- Download chapter images
+- Convert pages to grayscale
+- Optimize page resolution for e-ink
+- Convert pages to HEIC
+- Build CBZ and convert to EPUB
+- Per-volume EPUB generation
+- Rich UI logs + progress bars + completion notifications
+- Localization (EN / UK / RU)
+
+============================================================
+2) APP ARCHITECTURE (CURRENT)
+============================================================
+
+Architecture style:
+- MVVM (views + view models + services + models)
+
+Top-level structure:
+- Sources/App: app entry and navigation views
+- Sources/Features/MangaInUa: feature implementation for manga.in.ua
+- Sources/Features/ComXLife: feature implementation for com-x.life
+- Sources/Shared: cross-feature services, UI components, localization, helpers
+
+Main ViewModels:
+- RunnerViewModel (manga/in/ua feature)
+- ComXLifeViewModel (com-x.life feature)
+
+Core service layers:
+- manga/in/ua: MangaEngine + MangaInUAClient + Downloader + EpubConverter
+- com-x.life: ComXDownloaderService + ComXEpubConverter + cookie/auth utilities
+- Shared: ImageProcessingService, ProcessRegistry, ShellProcessService,
+  AppPerformanceProfile, FanControlService, AppNotificationService, etc.
+
+============================================================
+3) APP ENTRY + GLOBAL BEHAVIOR
+============================================================
+
+On app launch:
+- Opens ServiceSelectionRootView.
+- Sends Telegram startup log via TelegramReporter (using configured token/chat ID/app tag).
+
+Global navigation:
+- Root screen shows service picker cards/buttons.
+- User selects one of the two services and enters feature-specific screen.
+- Back navigation returns to service picker.
+
+Footer:
+- Button: “Other author projects” (opens App Store developer page)
+- Button: “Support the project” (opens in-app WebView sheet)
+- App version/build text (from app bundle info)
+
+============================================================
+4) SUPPORTED INPUT MODES
+============================================================
+
+manga/in/ua feature:
+- Supports search mode (text query) and download mode (URL)
+- Auto-switches mode based on input:
+  - If input is URL(s): switch to download mode
+  - If input is plain text: switch to search mode
+
+com-x.life feature:
+- Download mode only (URL-based)
+
+URL queue support:
+- User can paste multiple links.
+- Parser accepts comma-separated and newline-separated values.
+- Queue is processed sequentially by URL.
+
+Validation:
+- Empty input is blocked with user-friendly log error.
+- com-x.life requires all queue items to be valid web URLs.
+
+============================================================
+5) FILTERING LOGIC (CHAPTERS / VOLUMES)
+============================================================
+
+Both services support chapter/volume filtering where available.
+
+Accepted filter syntax examples:
+- "1-2"
+- "1-2,4,10-12"
+- Mixed single values and ranges
+
+Behavior:
+- If both chapter and volume filters are provided,
+  chapter filtering is applied within matching volumes.
+- Invalid filter syntax produces explicit error.
+
+============================================================
+6) DOWNLOAD + CONVERSION PIPELINE (CORE)
+============================================================
+
+For each downloaded chapter/page set, the processing pipeline is:
+1. Download original image/archive
+2. Convert page to grayscale (B/W)
+3. Optimize resolution for e-ink
+   - Target max height: 1080px
+   - Keep aspect ratio
+   - Never upscale smaller images
+4. Convert to HEIC
+5. Remove metadata/EXIF where possible
+6. Package converted files
+
+Packaging behavior:
+- Volume staging folders are used internally.
+- Chapter outputs are accumulated into volume-level content.
+- Final artifacts are created per volume.
+
+EPUB behavior:
+- One EPUB per volume.
+- Conversion occurs after a volume is fully downloaded/processed.
+- Temporary intermediate artifacts are cleaned after successful packaging.
+
+Cover handling:
+- Optional custom cover image can be selected.
+- Cover enters the same conversion pipeline (B/W + HEIC style handling)
+- Cover is prepended in EPUB image sequence.
+
+============================================================
+7) MANGAINUA FEATURE DETAILS
+============================================================
+
+Primary flows:
+- Search:
+  - Query manga.in.ua
+  - Parse search cards
+  - Render readable result list with links in logs
+- Download:
+  - Resolve manga/chapter links
+  - Fetch chapter list
+  - Apply chapter/volume filters
+  - Download images per chapter
+  - Run conversion pipeline
+  - Build CBZ and EPUB
+
+Manga reading mode handling:
+- EPUB page order is generated to support manga-style reading semantics
+  configured by the app’s current logic.
+
+Logging includes:
+- Search start/results
+- Chapter discovery
+- Per-chapter progress
+- Per-page and conversion stage progress
+- HEIC conversion size delta text
+- CBZ -> EPUB steps and completion
+
+============================================================
+8) COMXLIFE FEATURE DETAILS
+============================================================
+
+Primary flow:
+- URL input to com-x.life manga page
+- Parse manga metadata and chapter table/API payloads
+- Apply chapter/volume filters
+- Download chapter archives via website endpoints
+- Extract archive images
+- Run conversion pipeline
+- Package per volume: CBZ then EPUB
+
+Auth/cookie model:
+- Detects when authorization is required.
+- If valid cookies already exist: retries without showing login UI.
+- If auth is needed:
+  - Opens in-app login WebView sheet
+  - Captures cookies from WebView cookie store
+  - Persists cookies
+  - Retries download flow
+- Provides “reset login” action to clear saved cookies.
+
+Robustness for ComX parsing:
+- Supports multiple chapter ID field names and payload variants.
+- Includes anti-bot/auth gate handling heuristics and retry path.
+
+============================================================
+9) PROGRESS + LOGGING UX
+============================================================
+
+Log panel:
+- Human-readable log stream shown in UI
+- Link detection and clickable URL rendering in logs
+- Friendly event-oriented text (localized)
+
+Progress bars:
+- Multi-level progress model:
+  - Pages in current chapter
+  - Chapters in current volume
+  - Volumes overall / volume EPUB conversion stage
+
+Progress stage semantics:
+- Downloading pages
+- Converting pages to B/W
+- Optimizing page resolution
+- Optimizing page size (HEIC conversion)
+- Volume EPUB conversion
+
+Completion UX:
+- UI alert when whole process completes
+- System notification when process completes
+- Completion message includes manga title fallback and volume count summary
+
+============================================================
+10) PERFORMANCE / CONCURRENCY / TURBO MODE
+============================================================
+
+AppPerformanceProfile controls execution profile globally.
+
+Two performance profiles:
+- Turbo OFF:
+  - Background priorities
+  - Lower parallelism
+  - Lower network aggressiveness
+  - `nice` wrapping for shell commands to reduce CPU pressure
+- Turbo ON:
+  - userInitiated/high priorities
+  - Higher parallelism based on active CPU cores
+  - Higher network responsiveness
+
+Turbo mode UX:
+- Toggle exists on feature screens
+- Warning alert shown when enabling turbo mode
+- Turbo state persisted via shared profile state
+
+Fan integration:
+- If turbo mode is enabled and helper commands are available,
+  app attempts fan max mode during active processing,
+  and returns to auto mode after completion/stop.
+
+============================================================
+11) PROCESS CONTROL + CANCELLATION
+============================================================
+
+Start/stop model:
+- A running task is tracked per feature view model.
+- Stop action cancels task and terminates registered processes.
+- ProcessRegistry is used to track/terminate spawned shell processes.
+
+When stopped/cancelled:
+- Logs cancellation
+- Resets running state
+- Fan mode is restored to auto (if previously enabled)
+
+============================================================
+12) IMAGE + SHELL TOOLING
+============================================================
+
+Image tooling:
+- Uses ImageMagick (`magick`) when available for higher quality conversion.
+- Fallbacks to native macOS tools (`sips`, etc.) where possible.
+
+Magick detection/install helper:
+- App checks if `magick` is installed.
+- If missing, UI can trigger Terminal command to install via Homebrew.
+- App polls for install completion and updates UI state.
+
+File format handling:
+- Supports conversion from common image formats to normalized processing chain.
+- HEIC is the final optimized image format for internal packaging pipeline.
+
+============================================================
+13) LOCALIZATION
+============================================================
+
+Supported languages:
+- English (en)
+- Ukrainian (uk)
+- Russian (ru)
+
+Localization scope:
+- Buttons, labels, placeholders
+- Logs and status messages
+- Alerts and warnings
+- Progress stage titles
+
+============================================================
+14) TEST COVERAGE (PROJECT CAPABILITY)
+============================================================
+
+Automated unit/UI-smoke tests exist for:
+- View models (RunnerViewModel, ComXLifeViewModel)
+- Manga client parsing and engine behavior
+- Downloader/EPUB conversion behavior
+- Image processing service behaviors
+- Utility helpers (queue parsing, formatting, log parsing)
+- Performance profile behavior
+- Shell/process registry behavior
+- UI smoke hosting tests
+
+Current known baseline from CI/local runs in this project state:
+- 70 tests total
+- All passing in recent runs
+
+============================================================
+15) EXTERNAL INTEGRATIONS
+============================================================
+
+- TelegramReporter (SPM dependency)
+  - Used on app startup for telemetry/log reporting
+
+- GitHub Pages (repo-level docs deployment)
+  - Docs source: `docs/`
+  - Static page can describe app capabilities for users
+
+============================================================
+16) USER-FACING FEATURE CHECKLIST (SUMMARY)
+============================================================
+
+- [x] Service picker (manga/in/ua / com-x.life)
+- [x] Back navigation to service picker
+- [x] Multi-URL queue input
+- [x] Search mode (manga/in/ua)
+- [x] URL download mode (both services)
+- [x] Chapter filter field (range syntax)
+- [x] Volume filter field (range syntax)
+- [x] Output directory picker
+- [x] Optional EPUB cover picker
+- [x] Start / Stop control
+- [x] Real-time logs in UI
+- [x] Clickable links in logs
+- [x] Multi-stage progress bars
+- [x] Completion alert + system notification
+- [x] Per-volume EPUB output
+- [x] ComX login WebView + cookie persistence
+- [x] Reset ComX login cookies
+- [x] HEIC conversion pipeline
+- [x] B/W + resolution optimization pipeline
+- [x] Turbo mode toggle with warning
+- [x] Optional fan helper integration in turbo mode
+- [x] Localization (EN/UK/RU)
+- [x] Footer links + support WebView
+- [x] App version/build display in footer
+
+============================================================
+17) IMPLEMENTATION NOTE FOR ANOTHER AI
+============================================================
+
+If another AI is generating a GitHub Pages product page from this file,
+it should present this app as:
+- A native macOS manga downloader
+- Focused on manga/in/ua + com-x.life
+- Built around download -> optimize -> HEIC -> EPUB pipeline
+- With robust auth handling for com-x.life
+- With detailed progress, logs, and user control
+- With localization and performance profiles (including turbo mode)
+

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Документация Manga Downloader (RU)</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+<header>
+  <nav class="nav">
+    <div class="brand">Manga Downloader Docs</div>
+    <div class="lang-switcher" aria-label="Переключатель языка">
+      <a href="../en/" data-lang="en">EN</a>
+      <a href="../uk/" data-lang="uk">UK</a>
+      <a href="../ru/" data-lang="ru">RU</a>
+    </div>
+  </nav>
+</header>
+<main class="container">
+  <h1>Manga Downloader (macOS) - Документация</h1>
+  <p class="small">Версия: 1.0 | Платформа: нативное SwiftUI-приложение для macOS</p>
+
+  <section class="card">
+    <h2>Что это</h2>
+    <p>Manga Downloader - это настольное приложение, которое загружает мангу с поддерживаемых сайтов и конвертирует контент в EPUB, оптимизированный для e-ink. Поддерживаемые источники: manga/in/ua (<code>manga.in.ua</code>) и com-x.life (<code>com-x.life</code>).</p>
+  </section>
+
+  <section class="card">
+    <h2>Возможности</h2>
+    <ul>
+      <li>Выбор сервиса с двумя источниками: manga/in/ua и com-x.life.</li>
+      <li>Ввод одного URL или очереди URL (через запятую/перенос строки).</li>
+      <li>Автопереключение режима manga/in/ua: URL для загрузки, текст для поиска.</li>
+      <li>Фильтрация глав/томов с синтаксисом диапазонов: <code>1-2</code>, <code>1-2,4,10-12</code>.</li>
+      <li>Опциональная пользовательская обложка EPUB.</li>
+      <li>Вывод по томам: один EPUB на том.</li>
+      <li>Локализованные логи в реальном времени с кликабельными ссылками и многоуровневым прогрессом.</li>
+      <li>Управление Start/Stop с отменой и очисткой процессов.</li>
+      <li>Turbo-режим (профиль производительности) с предупреждением и сохранением состояния.</li>
+      <li>Завершение: alert в UI + системное уведомление macOS.</li>
+      <li>Локализация: English, Ukrainian, Russian.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Поддерживаемые сервисы</h2>
+    <h3>manga/in/ua</h3>
+    <ul>
+      <li>Поиск: запрос к сайту, парсинг карточек, вывод читаемых результатов в логах.</li>
+      <li>Загрузка: резолв ссылок, получение списка глав, применение фильтров, загрузка изображений, сборка CBZ и EPUB.</li>
+      <li>Порядок страниц EPUB формируется по manga-style логике, используемой приложением.</li>
+    </ul>
+    <h3>com-x.life</h3>
+    <ul>
+      <li>URL-загрузка с парсингом метаданных и таблицы/API глав сайта.</li>
+      <li>Загрузка архивов глав, распаковка, затем конвертация и упаковка.</li>
+      <li>Auth-поток с сохранением cookies, in-app login WebView, повторной попыткой и действием reset login.</li>
+      <li>Устойчивый парсинг для вариантов payload и разных названий полей chapter ID.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Как это работает (пошагово)</h2>
+    <ol>
+      <li>Выберите сервис на стартовом экране.</li>
+      <li>Укажите URL(ы) или текст поиска (только для manga/in/ua).</li>
+      <li>При необходимости задайте фильтры глав/томов и директорию вывода.</li>
+      <li>При необходимости выберите пользовательскую обложку.</li>
+      <li>Запустите процесс. Для каждого набора глава/страницы выполняется pipeline:</li>
+    </ol>
+    <ul>
+      <li>Загрузка исходного изображения/архива.</li>
+      <li>Конвертация в grayscale (B/W).</li>
+      <li>Оптимизация под e-ink (макс. высота 1080px, сохранение пропорций, без апскейла).</li>
+      <li>Конвертация в HEIC.</li>
+      <li>Удаление metadata/EXIF, где возможно.</li>
+      <li>Промежуточная сборка по томам и упаковка.</li>
+      <li>Создание CBZ, затем EPUB по каждому тому, и очистка временных артефактов после успеха.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Обзор архитектуры (MVVM)</h2>
+    <ul>
+      <li><strong>Views + ViewModels + Services + Models</strong> (MVVM).</li>
+      <li>Основные ViewModel: <code>RunnerViewModel</code> (manga/in/ua), <code>ComXLifeViewModel</code>.</li>
+      <li>Сервисы manga/in/ua: <code>MangaEngine</code>, <code>MangaInUAClient</code>, <code>Downloader</code>, <code>EpubConverter</code>.</li>
+      <li>Сервисы com-x.life: <code>ComXDownloaderService</code>, <code>ComXEpubConverter</code>, утилиты cookie/auth.</li>
+      <li>Общие сервисы: <code>ImageProcessingService</code>, <code>ProcessRegistry</code>, <code>ShellProcessService</code>, <code>AppPerformanceProfile</code>, <code>FanControlService</code>, <code>AppNotificationService</code>.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Auth-поток (com-x.life)</h2>
+    <ol>
+      <li>Downloader определяет, что требуется авторизация.</li>
+      <li>Если валидные cookies уже есть, поток повторяется без UI логина.</li>
+      <li>Если нет, открывается in-app login WebView и cookies считываются.</li>
+      <li>Cookies сохраняются, после чего поток загрузки запускается повторно.</li>
+      <li>Пользователь может сбросить сохраненные cookies через reset login.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Правила фильтрации</h2>
+    <ul>
+      <li>Поддерживаемый синтаксис: отдельные значения и диапазоны (например, <code>1-2,4,10-12</code>).</li>
+      <li>Если заданы оба фильтра, фильтр глав применяется внутри отфильтрованных томов.</li>
+      <li>Невалидный синтаксис возвращает явную ошибку валидации.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Прогресс, логи и управление процессом</h2>
+    <ul>
+      <li>Панель логов показывает события в читаемом виде и кликабельные ссылки.</li>
+      <li>Этапы прогресса: загрузка, B/W-конвертация, оптимизация разрешения, HEIC-оптимизация, EPUB-конвертация тома.</li>
+      <li>Многоуровневый прогресс отслеживает страницы главы, главы в томе и общий прогресс по томам.</li>
+      <li>Stop отменяет задачу, завершает зарегистрированные shell-процессы, логирует отмену и возвращает режим вентиляторов в auto (если использовался).</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Turbo-режим и производительность</h2>
+    <ul>
+      <li><strong>Turbo OFF:</strong> фоновые приоритеты, меньший параллелизм/сетевая агрессивность, <code>nice</code> для shell-команд.</li>
+      <li><strong>Turbo ON:</strong> высокие приоритеты, больший параллелизм по числу CPU-ядер, более высокая сетевая отзывчивость.</li>
+      <li>При включении Turbo показывается предупреждение; состояние сохраняется глобально.</li>
+      <li>Опциональная интеграция fan helper: max-режим во время активной обработки в Turbo, возврат в auto при остановке/завершении.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Зависимости и инструменты</h2>
+    <ul>
+      <li>Для лучшего качества конвертации приоритетно используется ImageMagick <code>magick</code>.</li>
+      <li>Fallback-инструменты: нативные команды macOS, включая <code>sips</code>.</li>
+      <li>Приложение может проверять наличие <code>magick</code>, запускать команду установки через Homebrew в Terminal и опрашивать статус завершения.</li>
+      <li>Интеграция TelegramReporter отправляет стартовую телеметрию/лог с настроенными token/chat/app tag.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Установка / сборка</h2>
+    <ol>
+      <li>Клонируйте репозиторий.</li>
+      <li>Откройте проект в Xcode (macOS target).</li>
+      <li>При необходимости установите опциональные инструменты для качества изображений: <code>magick</code> (ImageMagick).</li>
+      <li>Соберите и запустите SwiftUI-приложение.</li>
+    </ol>
+    <p class="small">Примечание: документация основана на спецификации функциональности v1.0 и описывает поведение текущей архитектуры приложения.</p>
+  </section>
+
+  <section class="card">
+    <h2>Руководство по использованию</h2>
+    <ol>
+      <li>Запустите приложение и выберите manga/in/ua или com-x.life.</li>
+      <li>Вставьте одну или несколько ссылок. Для поиска в manga/in/ua введите обычный текст вместо URL.</li>
+      <li>При необходимости настройте фильтры глав/томов.</li>
+      <li>Выберите директорию вывода и опциональную обложку EPUB.</li>
+      <li>При необходимости включите Turbo (с предупреждением).</li>
+      <li>Нажмите Start и отслеживайте логи/прогресс.</li>
+      <li>После завершения проверьте alert/уведомление и EPUB-файлы по томам.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>FAQ / Устранение неполадок</h2>
+    <h3>Ввод отклоняется</h3>
+    <p>Пустой ввод блокируется. В режиме com-x.life все элементы очереди должны быть валидными URL.</p>
+    <h3>Фильтр не применяется</h3>
+    <p>Проверьте синтаксис и удалите невалидные токены. Используйте только числа и диапазоны через запятую.</p>
+    <h3>com-x.life требует авторизацию</h3>
+    <p>Выполните вход в WebView. Если cookies устарели, используйте reset login и повторите запуск.</p>
+    <h3>Проблемы с качеством/скоростью конвертации</h3>
+    <p>Установите ImageMagick (<code>magick</code>) для предпочтительного пути конвертации. Иначе приложение использует нативные инструменты.</p>
+    <h3>Высокая нагрузка CPU/температура</h3>
+    <p>Отключите Turbo для снижения нагрузки. Turbo намеренно увеличивает параллелизм и скорость обработки.</p>
+  </section>
+
+  <section class="card">
+    <h2>Конфиденциальность и юридическое предупреждение</h2>
+    <ul>
+      <li>Приложение обрабатывает URL и загружаемый контент, предоставленные пользователем.</li>
+      <li>Cookies авторизации com-x.life сохраняются для повторных авторизованных запросов и могут быть сброшены пользователем.</li>
+      <li>Стартовая телеметрия/логи через TelegramReporter работают только при наличии настроенных учетных данных.</li>
+      <li>Пользователь несет ответственность за соблюдение условий сервисов и применимого авторского права.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Журнал изменений / Примечания к релизу (1.0)</h2>
+    <ul>
+      <li>Первый документированный релиз Manga Downloader для macOS.</li>
+      <li>Поддержка двух сервисов: manga/in/ua и com-x.life.</li>
+      <li>Полный pipeline от загрузки до EPUB: grayscale, e-ink оптимизация, HEIC и EPUB по томам.</li>
+      <li>com-x.life login WebView с сохранением cookies и reset-действием.</li>
+      <li>Локализованные логи в реальном времени, progress bars, alert/notification, Start/Stop и Turbo-режим.</li>
+      <li>Мультиязычная документация GitHub Pages (EN/UK/RU).</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Источник истины: <a href="../FULL_APP_FUNCTIONALITY_SPEC.txt">FULL_APP_FUNCTIONALITY_SPEC.txt</a></p>
+  </footer>
+</main>
+<script src="../assets/lang.js"></script>
+</body>
+</html>
