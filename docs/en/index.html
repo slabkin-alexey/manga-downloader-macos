@@ -81,17 +81,6 @@
   </section>
 
   <section class="card">
-    <h2>Architecture Overview (MVVM)</h2>
-    <ul>
-      <li><strong>Views + ViewModels + Services + Models</strong> (MVVM).</li>
-      <li>Main ViewModels: <code>RunnerViewModel</code> (manga/in/ua), <code>ComXLifeViewModel</code>.</li>
-      <li>manga/in/ua services: <code>MangaEngine</code>, <code>MangaInUAClient</code>, <code>Downloader</code>, <code>EpubConverter</code>.</li>
-      <li>com-x.life services: <code>ComXDownloaderService</code>, <code>ComXEpubConverter</code>, cookie/auth utilities.</li>
-      <li>Shared services: <code>ImageProcessingService</code>, <code>ProcessRegistry</code>, <code>ShellProcessService</code>, <code>AppPerformanceProfile</code>, <code>FanControlService</code>, <code>AppNotificationService</code>.</li>
-    </ul>
-  </section>
-
-  <section class="card">
     <h2>Authentication Flow (com-x.life)</h2>
     <ol>
       <li>Downloader detects that authorization is required.</li>
@@ -139,17 +128,6 @@
       <li>App can check for missing <code>magick</code>, run Homebrew install command in Terminal, and poll for completion.</li>
       <li>TelegramReporter integration sends startup telemetry/log event using configured token/chat/app tag.</li>
     </ul>
-  </section>
-
-  <section class="card">
-    <h2>Installation / Build</h2>
-    <ol>
-      <li>Clone repository.</li>
-      <li>Open project in Xcode (macOS target).</li>
-      <li>Ensure optional tools are installed if needed for image quality: <code>magick</code> (ImageMagick).</li>
-      <li>Build and run the SwiftUI app.</li>
-    </ol>
-    <p class="small">Note: This documentation is based on functionality spec v1.0 and describes behavior exposed by the current app architecture.</p>
   </section>
 
   <section class="card">

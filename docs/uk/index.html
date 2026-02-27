@@ -81,17 +81,6 @@
   </section>
 
   <section class="card">
-    <h2>Огляд архітектури (MVVM)</h2>
-    <ul>
-      <li><strong>Views + ViewModels + Services + Models</strong> (MVVM).</li>
-      <li>Основні ViewModel: <code>RunnerViewModel</code> (manga/in/ua), <code>ComXLifeViewModel</code>.</li>
-      <li>Сервіси manga/in/ua: <code>MangaEngine</code>, <code>MangaInUAClient</code>, <code>Downloader</code>, <code>EpubConverter</code>.</li>
-      <li>Сервіси com-x.life: <code>ComXDownloaderService</code>, <code>ComXEpubConverter</code>, утиліти cookie/auth.</li>
-      <li>Спільні сервіси: <code>ImageProcessingService</code>, <code>ProcessRegistry</code>, <code>ShellProcessService</code>, <code>AppPerformanceProfile</code>, <code>FanControlService</code>, <code>AppNotificationService</code>.</li>
-    </ul>
-  </section>
-
-  <section class="card">
     <h2>Auth-потік (com-x.life)</h2>
     <ol>
       <li>Downloader визначає, що потрібна авторизація.</li>
@@ -139,17 +128,6 @@
       <li>Застосунок може перевіряти наявність <code>magick</code>, запускати Homebrew команду встановлення в Terminal і опитувати статус завершення.</li>
       <li>Інтеграція TelegramReporter надсилає стартову телеметрію/лог за налаштованими token/chat/app tag.</li>
     </ul>
-  </section>
-
-  <section class="card">
-    <h2>Встановлення / збірка</h2>
-    <ol>
-      <li>Клонуйте репозиторій.</li>
-      <li>Відкрийте проєкт в Xcode (macOS target).</li>
-      <li>За потреби встановіть опційні інструменти для якості зображень: <code>magick</code> (ImageMagick).</li>
-      <li>Зберіть і запустіть SwiftUI застосунок.</li>
-    </ol>
-    <p class="small">Примітка: документація базується на специфікації функціональності v1.0 і описує поведінку поточної архітектури застосунку.</p>
   </section>
 
   <section class="card">
