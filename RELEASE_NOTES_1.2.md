@@ -2,13 +2,6 @@
 
 ## English
 
-### Distribution and Security
-- Built a production `.app` package for macOS.
-- Signed with `Developer ID Application`.
-- Successfully notarized with Apple Notary service.
-- Stapled notarization ticket to the app.
-- Prepared release archive: `Manga-Downloader-macOS-1.2.zip`.
-
 ### New UX Features
 - Added manual update check action in footer (`Check updates`).
 - Added "no updates available" alert for manual checks.
@@ -38,12 +31,6 @@
   - then scrolls instead of over-expanding
 - Kept UI controls aligned between MangaInUa and Com-X flows.
 
-### macOS Telegram First-Launch Reporting Fix
-- Added a dedicated `FirstLaunchTelegramReporter` wrapper for macOS-safe first-launch behavior.
-- Switched first-launch "sent" state tracking to `UserDefaults`.
-- Calls Telegram reporter with `ignoreFirstLaunch: true` to avoid keychain-dependent first-launch edge cases.
-- Ensures the first-launch report is sent once per local app profile.
-
 ### Localization Updates
 - Added/updated localization keys for English, Ukrainian, and Russian.
 - Included new strings for update checks, Kindle mode alerts, and history UI.
@@ -60,13 +47,6 @@
 ---
 
 ## Українська
-
-### Дистрибуція та безпека
-- Підготовлено production `.app` пакет для macOS.
-- Застосунок підписано `Developer ID Application`.
-- Успішно пройдено нотаризацію через Apple Notary service.
-- Квиток нотаризації додано до застосунку (`staple`).
-- Підготовлено релізний архів: `Manga-Downloader-macOS-1.2.zip`.
 
 ### Нові UX-можливості
 - Додано ручну перевірку оновлень у футері (`Check updates`).
@@ -97,12 +77,6 @@
   - далі вмикається скрол, без надмірного розширення
 - Вирівняно контроли UI між потоками MangaInUa і Com-X.
 
-### Виправлення Telegram-звіту на першому запуску (macOS)
-- Додано окремий обгортковий `FirstLaunchTelegramReporter` для безпечної поведінки на першому запуску в macOS.
-- Перемкнено зберігання стану "first launch sent" на `UserDefaults`.
-- Виклик Telegram reporter виконується з `ignoreFirstLaunch: true`, щоб уникнути edge-case проблем, залежних від keychain.
-- Звіт першого запуску надсилається один раз на локальний профіль застосунку.
-
 ### Оновлення локалізації
 - Додано/оновлено ключі локалізації для English, Ukrainian і Russian.
 - Додано нові рядки для перевірки оновлень, алертів Kindle Mode та UI історії.
@@ -119,13 +93,6 @@
 ---
 
 ## Русский
-
-### Дистрибуция и безопасность
-- Подготовлен production `.app` пакет для macOS.
-- Приложение подписано `Developer ID Application`.
-- Успешно пройдена нотарификация через Apple Notary service.
-- Билет нотарификации добавлен к приложению (`staple`).
-- Подготовлен релизный архив: `Manga-Downloader-macOS-1.2.zip`.
 
 ### Новые UX-возможности
 - Добавлена ручная проверка обновлений в футере (`Check updates`).
@@ -155,12 +122,6 @@
   - поле растет только до ограниченной высоты (2 видимые строки ссылок)
   - затем включается скролл, без чрезмерного расширения
 - Выравнены UI-контролы между потоками MangaInUa и Com-X.
-
-### Исправление Telegram-отчета первого запуска (macOS)
-- Добавлен отдельный `FirstLaunchTelegramReporter` wrapper для macOS-безопасного поведения на первом запуске.
-- Сохранение состояния "first launch sent" переведено на `UserDefaults`.
-- Telegram reporter вызывается с `ignoreFirstLaunch: true`, чтобы избежать keychain-зависимых edge-case проблем первого запуска.
-- Отчет первого запуска отправляется один раз на локальный профиль приложения.
 
 ### Обновления локализации
 - Добавлены/обновлены ключи локализации для English, Ukrainian и Russian.
