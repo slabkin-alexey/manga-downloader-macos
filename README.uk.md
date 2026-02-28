@@ -22,15 +22,15 @@ GitHub Pages:
 
 ## Скріншоти
 
-1. Екран завантаження (стан готовності)
+1. Екран вибору сервісу
 
 ![Screenshot 1](docs/assets/images/screenshot-1.png)
 
-2. Екран вибору сервісу
+2. Інтерфейс відкритого обраного сервісу
 
 ![Screenshot 2](docs/assets/images/screenshot-2.png)
 
-3. Активне завантаження з прогресом і логами
+3. Активна робота обраного сервісу
 
 ![Screenshot 3](docs/assets/images/screenshot-3.png)
 
@@ -63,14 +63,14 @@ GitHub Pages:
    - metadata cleanup where possible
    - packaging to CBZ and EPUB (per volume)
 
-## Release Assets (1.1)
+## Release Assets (1.3)
 
-Сторінка релізу 1.1:
-- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/1.1
+Сторінка релізу 1.3:
+- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/1.3
 
 Файли:
-- `Manga-Downloader-macOS-1.1.zip`
-- `RELEASE_NOTES_1.1.md`
+- `Manga-Downloader-macOS-1.3.zip`
+- `RELEASE_NOTES_1.3.md`
 - `SHA256SUMS.txt`
 
 Перевірка цілісності:
