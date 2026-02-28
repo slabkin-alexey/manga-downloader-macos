@@ -1,1 +1,1 @@
-12c64f636e16435009bf5729d014c48f5fde8a92f81e47932632646247ba0771  Manga-Downloader-macOS-2.0.zip
+245f00638d8eceda4ad799de8f1703ae393d291d64a39c9bccb7b12ec856c3f8  Manga-Downloader-macOS-2.0.1.zip
