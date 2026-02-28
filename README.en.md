@@ -24,15 +24,15 @@ GitHub Pages:
 
 1. Service selection screen
 
-![Screenshot 1](docs/assets/images/screenshot-1.png)
+![Screenshot 1](docs/assets/images/screenshot-1-v13.png)
 
 2. Interface of an opened selected service
 
-![Screenshot 2](docs/assets/images/screenshot-2.png)
+![Screenshot 2](docs/assets/images/screenshot-2-v13.png)
 
 3. Active work of a selected service
 
-![Screenshot 3](docs/assets/images/screenshot-3.png)
+![Screenshot 3](docs/assets/images/screenshot-3-v13.png)
 
 ## What You Can Do
 

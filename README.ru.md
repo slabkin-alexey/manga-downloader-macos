@@ -24,15 +24,15 @@ GitHub Pages:
 
 1. Экран выбора сервиса
 
-![Screenshot 1](docs/assets/images/screenshot-1.png)
+![Screenshot 1](docs/assets/images/screenshot-1-v13.png)
 
 2. Интерфейс открытого выбранного сервиса
 
-![Screenshot 2](docs/assets/images/screenshot-2.png)
+![Screenshot 2](docs/assets/images/screenshot-2-v13.png)
 
 3. Активная работа выбранного сервиса
 
-![Screenshot 3](docs/assets/images/screenshot-3.png)
+![Screenshot 3](docs/assets/images/screenshot-3-v13.png)
 
 ## Что умеет приложение
 
