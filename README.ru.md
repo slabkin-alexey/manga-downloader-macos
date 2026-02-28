@@ -69,15 +69,10 @@ GitHub Pages:
 - https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.0.1
 
 Файлы:
-- `Manga-Downloader-macOS-2.0.1.zip`
+- `Manga-Downloader-macOS-2.0.1.pkg`
+
+Примечания к релизу:
 - `RELEASE_NOTES_2.0.1.md`
-- `SHA256SUMS.txt`
-
-Проверка целостности:
-
-```bash
-shasum -a 256 -c SHA256SUMS.txt
-```
 
 ## FAQ / Устранение проблем
 

@@ -69,15 +69,10 @@ Latest 2.0.1 release page:
 - https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.0.1
 
 Assets:
-- `Manga-Downloader-macOS-2.0.1.zip`
+- `Manga-Downloader-macOS-2.0.1.pkg`
+
+Release notes:
 - `RELEASE_NOTES_2.0.1.md`
-- `SHA256SUMS.txt`
-
-Verify integrity:
-
-```bash
-shasum -a 256 -c SHA256SUMS.txt
-```
 
 ## FAQ / Troubleshooting
 
