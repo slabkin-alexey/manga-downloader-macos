@@ -1,1 +1,1 @@
-c2f5647bd486f33c9a4537f78d7cfeb9efcec7d773950d7c2203edb6abe37de3  Manga-Downloader-macOS-2.0.1.pkg
+f71eb8094975a4985f9919e5414baa5617aef6881abae0dd4d826e0e42779a3c  Manga-Downloader-macOS-2.0.1.pkg
