@@ -1,12 +1,5 @@
 # Manga Downloader (macOS)
 
-<p>
-  <strong>Language:</strong>
-  <a href="./README.en.md" target="_blank" rel="noopener noreferrer"><strong>English</strong></a> |
-  <a href="./README.uk.md" target="_blank" rel="noopener noreferrer"><strong>Українська</strong></a> |
-  <a href="./README.ru.md" target="_blank" rel="noopener noreferrer"><strong>Русский</strong></a>
-</p>
-
 Manga Downloader is a friendly macOS app that helps you download manga from supported websites and convert it into EPUB files optimized for e-ink reading.
 Common search phrases: `manga downloader macOS`, `EPUB manga converter`, `manga.in.ua downloader`, `com-x.life downloader`.
 
@@ -24,8 +17,6 @@ Interface languages:
 GitHub Pages:
 - Main: https://slabkin-alexey.github.io/manga-downloader-macos/
 - English: https://slabkin-alexey.github.io/manga-downloader-macos/en/
-- Ukrainian: https://slabkin-alexey.github.io/manga-downloader-macos/uk/
-- Russian: https://slabkin-alexey.github.io/manga-downloader-macos/ru/
 
 ## Screenshots
 

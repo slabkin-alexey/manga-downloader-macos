@@ -32,5 +32,3 @@ GitHub Pages documentation is available at:
 
 Language pages:
 - English: `/en/`
-- Ukrainian: `/uk/`
-- Russian: `/ru/`

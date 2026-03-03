@@ -17,8 +17,6 @@ Interface languages:
 GitHub Pages:
 - Main: https://slabkin-alexey.github.io/manga-downloader-macos/
 - English: https://slabkin-alexey.github.io/manga-downloader-macos/en/
-- Ukrainian: https://slabkin-alexey.github.io/manga-downloader-macos/uk/
-- Russian: https://slabkin-alexey.github.io/manga-downloader-macos/ru/
 
 ## Screenshots
 
