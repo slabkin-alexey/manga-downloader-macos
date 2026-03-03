@@ -7,10 +7,8 @@ Supported services:
 - `manga/in/ua` (`manga.in.ua`)
 - `com-x.life` (`com-x.life`)
 
-Interface languages:
-- Ukrainian
+Interface language:
 - English
-- Russian
 
 ## Documentation
 

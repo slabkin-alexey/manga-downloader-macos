@@ -32,7 +32,7 @@
 - Kept UI controls aligned between MangaInUa and Com-X flows.
 
 ### Localization Updates
-- Added/updated localization keys for English, Ukrainian, and Russian.
+- Added/updated localization keys for supported locales.
 - Included new strings for update checks, Kindle mode alerts, and history UI.
 
 ### Tests

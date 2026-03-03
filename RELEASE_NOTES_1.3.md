@@ -21,7 +21,7 @@
 - Progress display consistency:
   - queue progress data is passed and displayed more consistently during active jobs
 - Localization polish:
-  - updated user-facing texts in English, Ukrainian, and Russian for better clarity and consistency
+  - updated user-facing texts across supported locales for better clarity and consistency
 
 ### Screenshots
 
