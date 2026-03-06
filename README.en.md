@@ -59,16 +59,16 @@ GitHub Pages:
    - metadata cleanup where possible
    - packaging to CBZ and EPUB (per volume)
 
-## Release Assets (2.0.2)
+## Release Assets (2.0.3)
 
-Latest 2.0.2 release page:
-- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.0.2
+Latest 2.0.3 release page:
+- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.0.3
 
 Assets:
-- `Manga-Downloader-macOS-2.0.2.pkg`
+- `Manga-Downloader-macOS-2.0.3.pkg`
 
 Release notes:
-- `RELEASE_NOTES_2.0.2.md`
+- `RELEASE_NOTES_2.0.3.md`
 
 ## FAQ / Troubleshooting
 
