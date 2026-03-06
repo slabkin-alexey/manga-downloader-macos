@@ -33,7 +33,7 @@
 </header>
 <main class="container">
   <h1>Manga Downloader (macOS) - Documentation</h1>
-  <p class="small">Version: 2.0.3 | Platform: native SwiftUI app for macOS</p>
+  <p class="small">Version: 2.1 | Platform: native SwiftUI app for macOS</p>
 
   <section class="card">
     <h2>What It Is</h2>
@@ -200,13 +200,13 @@
   </section>
 
   <section class="card">
-    <h2>Changelog / Release Notes (2.0.3)</h2>
+    <h2>Changelog / Release Notes (2.1)</h2>
     <ul>
-      <li>Improved reliability for very large volumes and chapters.</li>
-      <li>Large final EPUB files can now be automatically split into smaller reader-friendly parts when needed.</li>
-      <li>End-of-process dialog now supports two actions: open manga folder or close dialog.</li>
-      <li>More consistent download and conversion behavior across Manga.in.ua and Com-X Life.</li>
-      <li>Improved cleanup flow after volume processing to control temporary artifacts.</li>
+      <li>Improved image optimization pipeline for more stable quality and size balance.</li>
+      <li>Smarter JPG handling now preserves visual quality while reducing unnecessary file size growth.</li>
+      <li>Conversion logic now keeps the better original image if a converted result would become larger.</li>
+      <li>Extra embedded image metadata is removed to keep final output files lean.</li>
+      <li>macOS installer package was refreshed as signed and notarized for safer installation.</li>
     </ul>
   </section>
 
