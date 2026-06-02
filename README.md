@@ -38,11 +38,12 @@ GitHub Pages:
 - Filter chapters/volumes with range syntax (`1-2,4,10-12`)
 - Add an optional custom EPUB cover image
 - Run full pipeline: download -> grayscale -> e-ink resize -> HEIC -> CBZ -> EPUB
-- Get one EPUB output per volume
+- Get one EPUB output per volume or merge all manga volumes into one EPUB
 - Use `com-x.life` auth flow (in-app WebView login, cookie persistence, retry, reset login)
 - Track work with localized logs, clickable links, and multi-level progress bars
 - Start/Stop with cancellation and cleanup
 - Enable Turbo mode for higher performance (with warning and saved state)
+- Validate downloaded chapter/page/volume counts before EPUB packaging
 - Receive completion alert + macOS notification
 
 ## Quick Start
@@ -57,18 +58,18 @@ GitHub Pages:
    - e-ink resize (max 1080px height, no upscaling)
    - HEIC conversion
    - metadata cleanup where possible
-   - packaging to CBZ and EPUB (per volume)
+   - packaging to CBZ and EPUB (per volume, or one merged EPUB when enabled)
 
-## Release Assets (2.1.1)
+## Release Assets (2.1.2)
 
-Latest 2.1.1 release page:
-- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.1.1
+Latest 2.1.2 release page:
+- https://github.com/slabkin-alexey/manga-downloader-macos/releases/tag/2.1.2
 
 Assets:
-- `Manga-Downloader-macOS-2.1.1.pkg`
+- `Manga-Downloader-macOS-2.1.2.pkg`
 
 Release notes:
-- `RELEASE_NOTES_2.1.1.md`
+- `RELEASE_NOTES_2.1.2.md`
 
 ## FAQ / Troubleshooting
 

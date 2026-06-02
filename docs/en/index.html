@@ -33,7 +33,7 @@
 </header>
 <main class="container">
   <h1>Manga Downloader (macOS) - Documentation</h1>
-  <p class="small">Version: 2.1.1 | Platform: native SwiftUI app for macOS</p>
+  <p class="small">Version: 2.1.2 | Platform: native SwiftUI app for macOS</p>
 
   <section class="card">
     <h2>What It Is</h2>
@@ -67,7 +67,8 @@
       <li>In manga/in/ua mode, the app auto-switches: URL for download, plain text for search.</li>
       <li>Filter chapters/volumes with range syntax: <code>1-2</code>, <code>1-2,4,10-12</code>.</li>
       <li>Add an optional custom EPUB cover image.</li>
-      <li>Get one EPUB per volume.</li>
+      <li>Get one EPUB per volume, or enable merging to combine all volumes of a manga into one EPUB.</li>
+      <li>Validate downloaded chapter, page, and volume counts against the source before EPUB packaging.</li>
       <li>Follow progress with real-time localized logs, clickable links, and progress bars.</li>
       <li>Start/Stop anytime with proper cancellation and process cleanup.</li>
       <li>Use Turbo mode for higher performance (with warning and saved state).</li>
@@ -80,8 +81,8 @@
     <h3>manga/in/ua</h3>
     <ul>
       <li>Search by text query, parse result cards, and show readable results in logs.</li>
-      <li>Download by URL: resolve links, fetch chapters, apply filters, download images, then build CBZ and EPUB.</li>
-      <li>EPUB page order follows the app's manga-style reading logic.</li>
+      <li>Download by URL: resolve links, fetch chapters, apply filters, download images, validate counts, then build CBZ and EPUB.</li>
+      <li>EPUB page order follows the app's manga-style reading logic with no page margins and aspect-ratio preserving image fit.</li>
     </ul>
     <h3>com-x.life</h3>
     <ul>
@@ -108,7 +109,7 @@
       <li>Convert to HEIC.</li>
       <li>Remove metadata/EXIF where possible.</li>
       <li>Stage by volume and package artifacts.</li>
-      <li>Create CBZ then EPUB per volume, then clean temporary intermediates on success.</li>
+      <li>Create CBZ then EPUB per volume, or one merged EPUB when enabled, then clean temporary intermediates on success.</li>
     </ul>
   </section>
 
@@ -169,9 +170,9 @@
       <li>Paste one link or multiple links. For manga/in/ua search, enter plain text instead of URL.</li>
       <li>Set chapter/volume filters if needed.</li>
       <li>Select output directory and optional EPUB cover image.</li>
-      <li>Optionally enable Turbo mode (a warning will be shown).</li>
+      <li>Optionally enable Turbo mode (a warning will be shown) and merged-volume EPUB output.</li>
       <li>Click Start and monitor logs and progress bars.</li>
-      <li>When finished, check the completion message/notification and your per-volume EPUB files.</li>
+      <li>When finished, check the completion message/notification and your EPUB files.</li>
     </ol>
   </section>
 
@@ -200,13 +201,13 @@
   </section>
 
   <section class="card">
-    <h2>Changelog / Release Notes (2.1.1)</h2>
+    <h2>Changelog / Release Notes (2.1.2)</h2>
     <ul>
-      <li>Improved app responsiveness during long download, packaging, and conversion operations.</li>
-      <li>Better background task handling reduces UI slowdowns while the app is busy.</li>
-      <li>Progress, logging, tutorial, and guidance flows were refined for a more consistent experience.</li>
-      <li>EPUB/output workflow and packaging behavior were cleaned up to match the current active app behavior.</li>
-      <li>Installer flow was updated with signed and notarized macOS package delivery and direct installer download support.</li>
+      <li>Removed automatic EPUB splitting by file size.</li>
+      <li>Added an option to merge all volumes of a manga into one EPUB.</li>
+      <li>Added source-count validation before EPUB packaging and before merged EPUB output.</li>
+      <li>Updated EPUB pages to render manga images without margins while preserving aspect ratio.</li>
+      <li>Updated installer package for version 2.1.2.</li>
     </ul>
   </section>
 
