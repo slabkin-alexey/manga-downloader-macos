@@ -17,6 +17,8 @@ This update focuses on EPUB output control and stronger validation before packag
 - Packaging stops with a clear error when counts do not match.
 
 ### Stability and maintenance
+- Fixed the in-app update sheet layout so release information stays readable and action buttons remain visible.
+- Release notes shown inside the app are cleaned up from raw Markdown syntax.
 - Updated tests for no-split EPUB behavior, merged EPUB output, source-count validation, and full-page EPUB layout.
 - Fixed Swift 6 sendability issues in the manga engine service protocols and test mocks.
 - Full test suite was re-run successfully before release.
