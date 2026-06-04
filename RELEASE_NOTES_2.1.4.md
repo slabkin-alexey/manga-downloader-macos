@@ -25,3 +25,4 @@ This update focuses on macOS 26 compatibility, safer packaging checks, and a cle
 - Architecture: Apple Silicon only (`arm64`)
 - Installer package: `Manga-Downloader-macOS-2.1.4.pkg`
 - Signing: Developer ID Application and Developer ID Installer
+- Notarization: accepted and stapled
